@@ -1,5 +1,8 @@
 import tensorflow as tf
 
+from build_model import model_inputs, seq2seq_model
+from Params import MAXIMUM_LENGTH
+from preprocessing import answerswords2int, questionswords2int
 
 ################ PART 3 - TRAINING THE SEQ2SEQ MODEL ################
 
@@ -21,3 +24,25 @@ tf.reset_default_graph()
 session = tf.InteractiveSession()
 
 # Loading the model inputs
+inputs, targets, lr, keep_prob = model_inputs()
+
+# Setting the sequence length
+sequence_length = tf.placeholder_with_default(MAXIMUM_LENGTH, None, name="sequence_length")
+
+# Getting the shape of the inputs tensor
+input_shape = tf.shape(inputs)
+
+# Getting the training and test predictions
+training_predictions, test_predictions = seq2seq_model(tf.reverse(inputs, [-1]),
+                                                       targets,
+                                                       keep_prob,
+                                                       batch_size,
+                                                       sequence_length,
+                                                       len(answerswords2int),
+                                                       len(questionswords2int),
+                                                       encoding_embedding_size,
+                                                       decoding_embedding_size,
+                                                       rnn_size,
+                                                       num_layers,
+                                                       questionswords2int
+                                                       )
