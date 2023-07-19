@@ -1,8 +1,7 @@
-from datetime import time
-
 import numpy as np
 import tensorflow as tf
-from jupyterlab.semver import valid
+
+from datetime import time
 
 from build_model import model_inputs, seq2seq_model
 from Params import MAXIMUM_LENGTH
