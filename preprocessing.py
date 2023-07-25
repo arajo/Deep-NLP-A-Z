@@ -39,15 +39,17 @@ def clean_text(text):
     text = re.sub(r"she's", "she is", text)
     text = re.sub(r"it's", "it is", text)
     text = re.sub(r"that's", "that is", text)
-    text = re.sub(r"what's", "that is", text)
+    text = re.sub(r"what's", "what is", text)
     text = re.sub(r"where's", "where is", text)
-    text = re.sub(r"\'ll", "will", text)
+    text = re.sub(r"how's", "how is", text)
+    text = re.sub(r"\'ll", " will", text)
     text = re.sub(r"\'ve", " have", text)
     text = re.sub(r"\'re", " are", text)
     text = re.sub(r"\'d", " would", text)
+    text = re.sub(r"n't", " not", text)
     text = re.sub(r"won't", "will not", text)
     text = re.sub(r"can't", "cannot", text)
-    text = re.sub(r"[-()\"#/@;:<>{}+=~|.?,]", "", text)
+    text = re.sub(r"[-()\"#/@;:<>{}`+=~|.!?,]", "", text)
     return text
 
 
@@ -61,7 +63,25 @@ clean_answers = []
 for answer in answers:
     clean_answers.append(clean_text(answer))
 
-# Creating a dictionary that maps each word to its number of occurances
+# Filtering out the questions and answers that are too short or too long
+short_questions = []
+short_answers = []
+i = 0
+for question in clean_questions:
+    if 2 <= len(question.split()) <= maximum_length:
+        short_questions.append(question)
+        short_answers.append(clean_answers[i])
+    i += 1
+clean_questions = []
+clean_answers = []
+i = 0
+for answer in short_answers:
+    if 2 <= len(answer.split()) <= maximum_length:
+        clean_answers.append(answer)
+        clean_questions.append(short_questions[i])
+    i += 1
+
+# Creating a dictionary that maps each word to its number of occurrences
 word2count = {}
 for question in clean_questions:
     for word in question.split(" "):
@@ -78,7 +98,7 @@ for answer in clean_answers:
             word2count[word] = 1
 
 # Creating two dictionaries that map the questions words and the answers words to a unique integer
-threshold = 20
+threshold = 15
 questionswords2int = {}
 word_number = 0
 for word, count in word2count.items():

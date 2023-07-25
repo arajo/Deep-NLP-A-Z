@@ -98,7 +98,7 @@ batch_index_check_validation_loss = ((len(training_questions)) // batch_size // 
 total_training_loss_error = 0
 list_validation_loss_error = []
 early_stopping_check = 0
-early_stopping_stop = 1000
+early_stopping_stop = 100
 checkpoint = "chatboy_weights.ckpt"
 session.run(tf.global_variables_initializer())
 for epoch in range(1, epochs + 1):
