@@ -1,7 +1,12 @@
-import tensorflow as tf
+import tensorflow.compat.v1 as tf
+
+tf.disable_v2_behavior()
+
+print(f"{tf.__version__=}")
 
 
 ################ PART 2 - BUILDING THE SEQ2SEQ MODEL ################
+# tf.compat.v1.disable_eager_execution()
 
 # Creating placeholders for the inputs and the targets
 def model_inputs():

@@ -1,6 +1,6 @@
 import re
 
-from Params import MAXIMUM_LENGTH
+from Params import maximum_length
 
 ################ PART 1 = DATA PREPROCESSING ################
 
@@ -133,7 +133,7 @@ for answer in clean_answers:
 # Sorting questions and answers by the length of questions
 sorted_clean_questions = []
 sorted_clean_answers = []
-for length in range(1, MAXIMUM_LENGTH + 1):
+for length in range(1, maximum_length + 1):
     for i in enumerate(questions_to_int):
         if len(i[1]) == length:
             sorted_clean_questions.append(questions_to_int[i[0]])

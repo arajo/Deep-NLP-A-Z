@@ -3,34 +3,36 @@ import tensorflow as tf
 
 from datetime import time
 
+import Params
 from build_model import model_inputs, seq2seq_model
-from Params import MAXIMUM_LENGTH
+from Params import maximum_length
 from preprocessing import answerswords2int, questionswords2int, sorted_clean_questions, sorted_clean_answers
+from Params import *
 
 ################ PART 3 - TRAINING THE SEQ2SEQ MODEL ################
 
 
 # Setting the Hyperparameters
-epochs = 100
-batch_size = 64
-rnn_size = 512
-num_layers = 3
-encoding_embedding_size = 512
-decoding_embedding_size = 512
-learning_rate = 0.01
-learning_rate_decay = 0.9
-min_learning_rate = 0.0001
-keep_probability = 0.5
+epochs = Params.epochs
+batch_size = Params.batch_size
+rnn_size = Params.rnn_size
+num_layers = Params.num_layers
+encoding_embedding_size = Params.encoding_embedding_size
+decoding_embedding_size = Params.decoding_embedding_size
+learning_rate = Params.learning_rate
+learning_rate_decay = Params.learning_rate_decay
+min_learning_rate = Params.min_learning_rate
+keep_probability = Params.keep_probability
 
 # Defining a session
-tf.reset_default_graph()
-session = tf.InteractiveSession()
+tf.compat.v1.reset_default_graph()
+session = tf.compat.v1.InteractiveSession()
 
 # Loading the model inputs
 inputs, targets, lr, keep_prob = model_inputs()
 
 # Setting the sequence length
-sequence_length = tf.placeholder_with_default(MAXIMUM_LENGTH, None, name="sequence_length")
+sequence_length = tf.compat.v1.placeholder_with_default(maximum_length, None, name="sequence_length")
 
 # Getting the shape of the inputs tensor
 input_shape = tf.shape(inputs)
